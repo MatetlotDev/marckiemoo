@@ -6,6 +6,7 @@ import { Providers } from "@/context/Providers";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/common/JsonLd";
+import { DemoBanner } from "@/components/common/DemoBanner";
 import { organizationJsonLd, personJsonLd } from "@/lib/seo";
 
 const inter = Inter({
@@ -83,6 +84,7 @@ export default function RootLayout({
           <main id="main">{children}</main>
           <Footer />
         </Providers>
+        <DemoBanner />
       </body>
     </html>
   );
