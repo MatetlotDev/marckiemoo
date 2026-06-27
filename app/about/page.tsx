@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Trophy, Target, Brain, Zap } from "lucide-react";
 import { SITE } from "@/config/site";
@@ -8,8 +9,7 @@ import { CredibilityBar } from "@/components/home/CredibilityBar";
 import { Button } from "@/components/ui/button";
 import { SocialLinks } from "@/components/common/SocialLinks";
 import { CreatorAvatar } from "@/components/common/CreatorAvatar";
-import { MarckiemooLegendCard } from "@/components/common/MarckiemooLegendCard";
-import { MARCKIEMOO } from "@/config/brawlhalla";
+import { getMarckiemooSkin } from "@/config/brawlhalla";
 
 export const metadata: Metadata = buildMetadata({
   title: "About Marckiemoo",
@@ -42,13 +42,16 @@ const WHY = [
 ];
 
 export default function AboutPage() {
+  const heroSkin = getMarckiemooSkin("Mordex");
+  const ctaSkin = getMarckiemooSkin("Mirage");
+
   return (
     <>
       <PageHero
         eyebrow="About"
         title="Meet Marckiemoo"
         subtitle={SITE.bio}
-        legend="Artemis"
+        skinSrc={heroSkin?.src}
       />
 
       <CredibilityBar />
@@ -137,46 +140,36 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Marckiemoo in-game — custom legend skins */}
-      <section className="container py-16">
-        <div className="flex flex-col gap-2 text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            In the arena
-          </span>
-          <h2 className="font-display text-2xl font-bold sm:text-3xl">
-            Marckiemoo, as a legend
-          </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
-            When I&apos;m not coaching, I&apos;m in the fight. Here&apos;s me dropped
-            onto a few of Brawlhalla&apos;s legends.
-          </p>
-        </div>
-
-        <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
-          {MARCKIEMOO.legends.map((legend, i) => (
-            <MarckiemooLegendCard
-              key={legend.as}
-              src={legend.src}
-              label={legend.as}
-              priority={i === 0}
+      {/* CTA — with Marckiemoo (Mirage) floating bottom-left, just above the footer */}
+      <section className="relative overflow-hidden">
+        {ctaSkin && (
+          <div
+            className="pointer-events-none absolute -left-8 bottom-0 hidden h-[120%] w-[15rem] md:block lg:w-[19rem]"
+            aria-hidden
+          >
+            <Image
+              src={ctaSkin.src}
+              alt=""
+              fill
+              sizes="19rem"
+              unoptimized
+              className="animate-floaty object-contain object-bottom opacity-90 drop-shadow-[0_16px_36px_rgba(0,0,0,0.6)] [mask-image:linear-gradient(to_bottom,black_85%,transparent)]"
             />
-          ))}
+          </div>
+        )}
+        <div className="container relative z-10 py-24 text-center">
+          <h2 className="font-display text-2xl font-bold sm:text-3xl">
+            Let&apos;s get you ranking up
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
+            Pick the format that fits you and book your first session today.
+          </p>
+          <Button asChild size="lg" className="mt-8">
+            <Link href="/shop">
+              Browse coaching <ArrowRight />
+            </Link>
+          </Button>
         </div>
-      </section>
-
-      {/* CTA */}
-      <section className="container py-16 text-center">
-        <h2 className="font-display text-2xl font-bold sm:text-3xl">
-          Let&apos;s get you ranking up
-        </h2>
-        <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-          Pick the format that fits you and book your first session today.
-        </p>
-        <Button asChild size="lg" className="mt-8">
-          <Link href="/shop">
-            Browse coaching <ArrowRight />
-          </Link>
-        </Button>
       </section>
     </>
   );

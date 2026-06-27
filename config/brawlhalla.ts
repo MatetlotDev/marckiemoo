@@ -102,3 +102,7 @@ export const MARCKIEMOO = {
     { as: "Mordex", src: "/assets/marckiemoo/marckiemoo_mordex.png" },
   ],
 } as const;
+
+/** Get one of Marckiemoo's custom skins by the legend it's based on. */
+export const getMarckiemooSkin = (as: string) =>
+  MARCKIEMOO.legends.find((l) => l.as === as);

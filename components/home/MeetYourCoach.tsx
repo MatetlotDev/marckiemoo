@@ -1,10 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BadgeCheck } from "lucide-react";
 import { SITE } from "@/config/site";
 import { MARCKIEMOO } from "@/config/brawlhalla";
 import { Button } from "@/components/ui/button";
 import { CreatorAvatar } from "@/components/common/CreatorAvatar";
-import { MarckiemooLegendCard } from "@/components/common/MarckiemooLegendCard";
 import { SocialLinks } from "@/components/common/SocialLinks";
 import { Reveal } from "@/components/common/Reveal";
 
@@ -52,13 +52,19 @@ export function MeetYourCoach() {
           </div>
         </Reveal>
 
-        {/* His custom legend skin */}
+        {/* His custom legend skin — floating cutout */}
         <Reveal delay={0.1}>
-          <div className="relative mx-auto w-full max-w-md">
-            <MarckiemooLegendCard src={featured.src} label={featured.as} />
-            <p className="mt-3 text-center text-xs text-muted-foreground">
-              Marckiemoo, dropped straight into the arena.
-            </p>
+          <div className="relative mx-auto flex h-[360px] w-full max-w-md items-end justify-center sm:h-[440px]">
+            <div className="absolute inset-0 bg-grid opacity-20" aria-hidden />
+            <Image
+              src={featured.src}
+              alt={`Marckiemoo as ${featured.as}`}
+              fill
+              sizes="(max-width: 1024px) 90vw, 440px"
+              priority
+              unoptimized
+              className="animate-floaty object-contain p-2 drop-shadow-[0_22px_44px_rgba(0,0,0,0.55)]"
+            />
           </div>
         </Reveal>
       </div>

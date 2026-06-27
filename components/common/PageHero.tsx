@@ -6,13 +6,16 @@ export function PageHero({
   eyebrow,
   title,
   subtitle,
-  /** Optional Brawlhalla legend name to show as a decorative accent. */
+  /** Optional Brawlhalla legend name (transparent art) to show as an accent. */
   legend,
+  /** Optional custom transparent skin image — floats on the right like a legend. */
+  skinSrc,
 }: {
   eyebrow?: string;
   title: string;
   subtitle?: string;
   legend?: string;
+  skinSrc?: string;
 }) {
   const legendArt = legend ? getLegend(legend) : undefined;
 
@@ -21,7 +24,24 @@ export function PageHero({
       <div className="absolute inset-0 bg-radial-glow" aria-hidden />
       <div className="absolute inset-0 bg-grid" aria-hidden />
 
-      {legendArt && (
+      {/* Custom Marckiemoo skin (transparent) — floats on the right */}
+      {skinSrc && (
+        <div
+          className="pointer-events-none absolute -right-4 bottom-0 hidden h-[120%] w-[17rem] md:block lg:w-[21rem]"
+          aria-hidden
+        >
+          <Image
+            src={skinSrc}
+            alt=""
+            fill
+            sizes="21rem"
+            unoptimized
+            className="animate-floaty object-contain object-bottom opacity-90 drop-shadow-[0_16px_36px_rgba(0,0,0,0.6)] [mask-image:linear-gradient(to_bottom,black_85%,transparent)]"
+          />
+        </div>
+      )}
+
+      {!skinSrc && legendArt && (
         <div
           className="pointer-events-none absolute -right-6 bottom-0 hidden h-[115%] w-[20rem] md:block lg:w-[24rem]"
           aria-hidden
